@@ -1,0 +1,39 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse-wtp'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'war'
+
+    configurations {
+        providedRuntime
+    }
+}
+
+
+/*war {
+	baseName = 'cms'
+	version = '0.0.1-SNAPSHOT'
+}*/
+
