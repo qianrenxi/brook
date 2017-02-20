@@ -1,8 +1,5 @@
 package org.qianrenxi.brook.system.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,23 +10,23 @@ import javax.persistence.ManyToOne;
 import org.qianrenxi.brook.system.annotation.SystemResource;
 
 @Entity
-@SystemResource(name="user")
-public class User implements Serializable {
+@SystemResource(name = "user")
+public class User extends Auditable {
 	private static final long serialVersionUID = -3250969626323435304L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
 	private String password;
 	private String email;
 	private String name;
 	@ManyToOne
-	@JoinColumn(name="site_id")
+	@JoinColumn(name = "site_id")
 	private Site site;
-	
-	@Embedded
-	private OperatingRecord operatingRecord;
+	@ManyToOne
+	@JoinColumn(name = "user_group_id")
+	private UserGroup userGroup;
 
 	public Long getId() {
 		return id;
@@ -79,11 +76,12 @@ public class User implements Serializable {
 		this.site = site;
 	}
 
-	public OperatingRecord getOperatingRecord() {
-		return operatingRecord;
+	public UserGroup getUserGroup() {
+		return userGroup;
 	}
 
-	public void setOperatingRecord(OperatingRecord operatingRecord) {
-		this.operatingRecord = operatingRecord;
+	public void setUserGroup(UserGroup userGroup) {
+		this.userGroup = userGroup;
 	}
+
 }

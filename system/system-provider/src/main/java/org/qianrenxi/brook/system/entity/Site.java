@@ -1,10 +1,6 @@
 package org.qianrenxi.brook.system.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,27 +8,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.qianrenxi.brook.system.annotation.SystemResource;
-import org.qianrenxi.brook.system.entity.support.MyEntityEventListener;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @SystemResource(name = "site")
-@EntityListeners({AuditingEntityListener.class, MyEntityEventListener.class})
-public class Site extends OperatingRecord implements Serializable {
-
-	private static final long serialVersionUID = 832126697486695094L;
-
+public class Site extends Auditable {
+	private static final long serialVersionUID = 2360932493937263142L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
+	private String shortName;
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	private Site Parent;
-	
-	//@Embedded
-	//private OperatingRecord operatingRecord;
 
 	public Long getId() {
 		return id;
@@ -50,6 +39,14 @@ public class Site extends OperatingRecord implements Serializable {
 		this.name = name;
 	}
 
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	public Site getParent() {
 		return Parent;
 	}
@@ -57,13 +54,5 @@ public class Site extends OperatingRecord implements Serializable {
 	public void setParent(Site parent) {
 		Parent = parent;
 	}
-
-/*	public OperatingRecord getOperatingRecord() {
-		return operatingRecord;
-	}
-
-	public void setOperatingRecord(OperatingRecord operatingRecord) {
-		this.operatingRecord = operatingRecord;
-	}*/
 	
 }

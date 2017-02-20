@@ -1,8 +1,8 @@
 package org.qianrenxi.brook.system.repository;
 
+import org.qianrenxi.brook.repository.SupportRepository;
 import org.qianrenxi.brook.system.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends SupportRepository<User, Long> {
 
 }

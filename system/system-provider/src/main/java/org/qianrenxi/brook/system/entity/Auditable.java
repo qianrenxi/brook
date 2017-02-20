@@ -3,8 +3,10 @@ package org.qianrenxi.brook.system.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Embeddable;
+import javax.persistence.ConstraintMode;
 import javax.persistence.EntityListeners;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
@@ -14,44 +16,60 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Embeddable
+/**
+ * 标记对象为可审计的
+ * 
+ * 创建和更新时，JPA会自动注入修改人和修改时间等审计信息
+ * 
+ * @author Tony
+ *
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class OperatingRecord implements Serializable {
+public abstract class Auditable implements Serializable {
 	private static final long serialVersionUID = -6832522029134793266L;
-	
+
 	@CreatedBy
 	@ManyToOne
-	private User createdBy;
+	@JoinColumn(name = "created_by", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+	protected User createdBy;
 	@CreatedDate
-	private Date createdDate;
+	protected Date createdDate;
 	@LastModifiedBy
 	@ManyToOne
-	private User lastModifiedBy;
+	@JoinColumn(name = "last_modified_by", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+	protected User lastModifiedBy;
 	@LastModifiedDate
-	private Date lastModifiedDate;
-	
+	protected Date lastModifiedDate;
+
 	public User getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public User getLastModifiedBy() {
 		return lastModifiedBy;
 	}
+
 	public void setLastModifiedBy(User lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
+
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}

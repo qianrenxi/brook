@@ -2,6 +2,8 @@ package org.qianrenxi.brook.system.repository;
 
 import static org.junit.Assert.assertTrue;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.qianrenxi.brook.BrookApplication;
@@ -16,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { BrookApplication.class, SystemConfig.class })
 @TestPropertySource(locations = { "classpath:application.properties" })
-// @Transactional
+@Transactional
 public class SiteRepositoryTest {
 
 	@Autowired
